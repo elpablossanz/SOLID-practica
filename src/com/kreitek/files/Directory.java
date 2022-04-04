@@ -2,6 +2,7 @@ package com.kreitek.files;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.kreitek.service.FileManager.calculateSize;
 
 public class Directory extends FileSystemItemBase implements FileSystemItem {
 
@@ -39,7 +40,7 @@ public class Directory extends FileSystemItemBase implements FileSystemItem {
 
     @Override
     public int getSize() {
-        return files.size();
+        return calculateSize(files);
     }
 
     @Override
