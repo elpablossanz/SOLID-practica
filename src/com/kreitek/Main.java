@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
         FileSystemItem root = buildTestFileSystem();
         printResult(root);
+
+
     }
 
     private static void printResult(FileSystemItem root) {
