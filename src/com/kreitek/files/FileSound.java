@@ -4,11 +4,17 @@ import com.kreitek.files.error.InvalidFileFormatException;
 
 import java.util.List;
 
-public class FileSound extends FileSystemItemBase implements FileSystemItem{
+public class FileSound extends FileSystemItemBase implements FileSystemItem,Files{
+
+    private int size = 0;
+    private boolean isOpen = false;
+    private int position = 0;
 
     protected FileSound(FileSystemItem parent, String name) {
         super(parent, name);
     }
+
+
 
     public FileSystemItem convertMp3ToWav() {
         if (!"mp3".equalsIgnoreCase(getExtension())) {
@@ -47,52 +53,77 @@ public class FileSound extends FileSystemItemBase implements FileSystemItem{
     }
 
     @Override
-    public void addFile(FileSystemItem file) {
+    public String getExtension() {
+        String extension = "";
+        int indexOfLastDot = getName().lastIndexOf(".");
+        if (indexOfLastDot > 0) {
+            extension = getName().substring(indexOfLastDot + 1);
+        }
+        return extension;
+    }
 
+
+
+    @Override
+    public List<FileSystemItem> listFiles() {
+        throw new UnsupportedOperationException("No es válido para ficheros");
+    }
+
+    @Override
+    public void addFile(FileSystemItem file) {
+        throw new UnsupportedOperationException("No es válido para ficheros");
     }
 
     @Override
     public void removeFile(FileSystemItem file) {
-
-    }
-
-    @Override
-    public String getExtension() {
-        return null;
-    }
-
-    @Override
-    public List<FileSystemItem> listFiles() {
-        return null;
+        throw new UnsupportedOperationException("No es válido para ficheros");
     }
 
     @Override
     public int getSize() {
-        return 0;
+        return size;
     }
 
     @Override
     public void open() {
-
+        isOpen = true;
+        // Aquí vendría código que actualizaría también this.size
     }
 
     @Override
     public void setPosition(int numberOfBytesFromBeginning) {
-
+        if (!isOpen) {
+            throw new UnsupportedOperationException("Debe abrir el fichero primero");
+        }
+        if (numberOfBytesFromBeginning > size) {
+            throw new UnsupportedOperationException("La posición no puede ser mayor que el tamaño del fichero");
+        }
+        this.position = numberOfBytesFromBeginning;
     }
 
     @Override
     public byte[] read(int numberOfBytesToRead) {
-        return new byte[0];
+        if (position + numberOfBytesToRead > size) {
+            numberOfBytesToRead = size - position;
+        }
+        // Aquí habría lógica que lee el contenido del fichero
+        byte[] buffer = new byte[numberOfBytesToRead];
+        position += numberOfBytesToRead;
+        return buffer;
     }
 
     @Override
     public void write(byte[] buffer) {
-
+        // Aquí habría lógica que escribiría en el fichero
+        size += buffer.length;
+        position += buffer.length;
     }
 
     @Override
     public void close() {
-
+        isOpen = false;
     }
+
+
+
 }

@@ -2,13 +2,11 @@ package com.kreitek.files;
 
 import java.util.List;
 
-public interface FileSystemItem {
-
-    String getName();
-    void setName(String name);
-    FileSystemItem getParent();
-    void setParent(FileSystemItem directory);
-    String getFullPath();
+public interface Files {
+    String getExtension();
+    void setPosition(int numberOfBytesFromBeginning);
+    byte[] read(int numberOfBytesToRead);
+    /*
     void addFile(FileSystemItem file);
     void removeFile(FileSystemItem file);
     void open();
@@ -16,4 +14,7 @@ public interface FileSystemItem {
     void write(byte[] buffer);
     int getSize();
     List<FileSystemItem> listFiles();
+
+     */
+
 }

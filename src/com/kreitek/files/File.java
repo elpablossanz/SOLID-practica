@@ -2,7 +2,7 @@ package com.kreitek.files;
 
 import java.util.List;
 
-public  class File extends FileSystemItemBase implements FileSystemItem {
+public  class File extends FileSystemItemBase implements Files{
 
     private int size = 0;
     private boolean isOpen = false;
@@ -21,6 +21,8 @@ public  class File extends FileSystemItemBase implements FileSystemItem {
         }
         return extension;
     }
+
+
 
     @Override
     public List<FileSystemItem> listFiles() {
@@ -81,11 +83,5 @@ public  class File extends FileSystemItemBase implements FileSystemItem {
     public void close() {
         isOpen = false;
     }
-
-    public FileSystemItem convertWavToMp3() {
-        return null;
-    }
-
-
 
 }
